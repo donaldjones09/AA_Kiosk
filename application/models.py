@@ -79,12 +79,12 @@ class Row(db.Model):
     def __init__(self, pic_ID, row_desc, row_ID):
         self.pic_ID = pic_ID
         self.row_desc = row_desc
-        self.row_ID
+        self.row_ID = row_ID
 
 class Sport(db.Model):
     __tablename__ = "sports"
     sport_name = db.Column(db.String(50))
-    sport_ID = db.Column(sb.Integer, primary_key=True)
+    sport_ID = db.Column(db.Integer, primary_key=True)
 
     def __init__(self, sport_name, sport_ID):
         self.sport_name = sport_name
