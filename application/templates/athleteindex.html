@@ -19,8 +19,8 @@
   <tbody>
     {% for row in rows %}
     <tr>
-      <td class = "c1"><button type="button" name="athlete" value={{row["ath_ID"]}} type="submit" class="btn btn-primary">{{row['Fname']}} {{row['Lname']}}</button></td>
-      <td class = "c3">{{row['Gradyear']}}</td>
+      <td class = "c1"><button type="submit" name="athlete" value="{{row["ath_ID"]}}" type="submit" class="btn btn-primary">{{row['Fname']}} {{row['Lname']}}</button></td>
+      <td class = "c2">{{row['Gradyear']}}</td>
     </tr>
     {% endfor %}
   </tbody>
