@@ -22,10 +22,11 @@ class Athlete(db.Model):
     Gradyear = db.Column(db.Integer)
     ath_ID = db.Column(db.Integer, primary_key=True)
 
-    def __init__(self, lastname, firstname, gradyear):
+    def __init__(self, lastname, firstname, gradyear, ath_ID):
         self.Lname = lastname
         self.Fname = firstname
         self.Gradyear = gradyear
+        self.ath_ID = ath_ID
 
 class Photo(db.Model):
     __tablename__ = "photos"
