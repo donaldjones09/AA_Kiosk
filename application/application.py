@@ -2,8 +2,6 @@ from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from models import *
 
-app.secret_key = b'\xeev\xc5\xe0\x0c9\x94\x1f\xad\xff\x02\xc2\xaa_bx\x0e\xf3*\x05\x01"\x02:'
-
 @app.route('/')
 def index():
     return render_template('index.html')
