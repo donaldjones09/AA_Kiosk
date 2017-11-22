@@ -38,7 +38,7 @@ class Coach(db.Model):
         self.Lname = lastname
         self.Fname = firstname
         self.coach_ID = coach_ID
-    
+
 
 class Photo(db.Model):
     __tablename__ = "photos"
@@ -52,3 +52,7 @@ class Photo(db.Model):
         self.filename = filename
         self.sport_ID = sport_ID
         self.pic_ID = pic_ID
+
+class Photo_seat(db.Model):
+    __tablename__ = "photo_seating"
+    
