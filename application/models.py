@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
-
 #Flask app configurations
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -14,7 +13,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///aagsport.db"
 app.config["SQLALCHEMY_ECHO"] = True
 db = SQLAlchemy(app)
 
-
+#object for each athlete
 class Athlete(db.Model):
     __tablename__ = "athletes"
     Lname = db.Column(db.String(50))
@@ -28,6 +27,7 @@ class Athlete(db.Model):
         self.Gradyear = gradyear
         self.ath_ID = ath_ID
 
+#object for each coach
 class Coach(db.Model):
     __tablename__ = "coaches"
     Lname = db.Column(db.String(50))
@@ -39,7 +39,7 @@ class Coach(db.Model):
         self.Fname = firstname
         self.coach_ID = coach_ID
 
-
+#object for every photo, information for every picture
 class Photo(db.Model):
     __tablename__ = "photos"
     year = db.Column(db.Integer)
@@ -53,6 +53,39 @@ class Photo(db.Model):
         self.sport_ID = sport_ID
         self.pic_ID = pic_ID
 
+#lists everyone in a photo
 class Photo_seat(db.Model):
     __tablename__ = "photo_seating"
-    
+    pic_ID = db.Column(db.Integer)
+    row_ID = db.Column(db.Integer)
+    ath_ID = db.Column(db.Integer)
+    coach_ID = db.Column(db.Integer)
+    seat_ID = db.Column(db.Integer, primary_key=True)
+
+    def __init__(self, pic_ID, row_ID, ath_ID, coach_ID, seat_ID):
+        self.pic_ID = pic_ID
+        self.row_ID = row_ID
+        self.ath_ID = ath_ID
+        self.coach_ID = coach_ID
+        self.seat_ID = seat_ID
+
+#row descriptions and ID (for weird photos)
+class Row(db.Model):
+    __tablename__ = "rows"
+    pic_ID = db.Column(db.Integer)
+    row_desc = db.Column(db.String(250))
+    row_ID = db.Column(db.Integer, primary_key=True)
+
+    def __init__(self, pic_ID, row_desc, row_ID):
+        self.pic_ID = pic_ID
+        self.row_desc = row_desc
+        self.row_ID
+
+class Sport(db.Model):
+    __tablename__ = "sports"
+    sport_name = db.Column(db.String(50))
+    sport_ID = db.Column(sb.Integer, primary_key=True)
+
+    def __init__(self, sport_name, sport_ID):
+        self.sport_name = sport_name
+        self.sport_ID = sport_ID
