@@ -21,3 +21,19 @@ def athletebio():
     ath_ID = int(session.get("ath_ID"))
     athlete = Athlete.query.filter_by(ath_ID = ath_ID).first()
     return render_template('athletebio.html', row = athlete)
+
+@app.route('/coachindex', methods = ["GET", "POST"])
+def coachindex():
+    if request.method == "GET":
+        rows = Coach.query.all()
+        return render_template('coachindex.html', rows = rows)
+    else:
+        coach_ID = int(request.form.get("coach"))
+        session['coach_ID'] = coach_ID
+        return redirect(url_for('coachbio'))
+
+@app.route('/coachbio', methods = ["GET"])
+def coachbio():
+    coach_ID = int(session.get("coach_ID"))
+    coach = Coach.query.filter_by(coach_ID = coach_ID).first()
+    return render_template('coachbio.html', row = coach)

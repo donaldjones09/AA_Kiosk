@@ -28,6 +28,18 @@ class Athlete(db.Model):
         self.Gradyear = gradyear
         self.ath_ID = ath_ID
 
+class Coach(db.Model):
+    __tablename__ = "coaches"
+    Lname = db.Column(db.String(50))
+    Fname = db.Column(db.String(50))
+    coach_ID = db.Column(db.Integer, primary_key=True)
+
+    def __init__(self, lastname, firstname, coach_ID):
+        self.Lname = lastname
+        self.Fname = firstname
+        self.coach_ID = coach_ID
+    
+
 class Photo(db.Model):
     __tablename__ = "photos"
     year = db.Column(db.Integer)
