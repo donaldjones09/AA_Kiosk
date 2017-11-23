@@ -36,4 +36,6 @@ def coachindex():
 def coachbio():
     coach_ID = int(session.get("coach_ID"))
     coach = Coach.query.filter_by(coach_ID = coach_ID).first()
-    return render_template('coachbio.html', row = coach)
+    #pics = Photo_seat.query.with_parent(Photo).filter(Photo_seat.coach_ID == coach_ID).all()
+    # find a way to join photos and photo_seating tables and return all rows with coach in them
+    return render_template('coachbio.html', coach = coach)

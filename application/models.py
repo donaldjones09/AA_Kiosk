@@ -53,7 +53,7 @@ class Photo(db.Model):
         self.sport_ID = sport_ID
         self.pic_ID = pic_ID
 
-#lists everyone in a photo
+#lists everyone in a photo, includes no description of rows
 class Photo_seat(db.Model):
     __tablename__ = "photo_seating"
     pic_ID = db.Column(db.Integer)
@@ -61,7 +61,7 @@ class Photo_seat(db.Model):
     ath_ID = db.Column(db.Integer)
     coach_ID = db.Column(db.Integer)
     seat_ID = db.Column(db.Integer, primary_key=True)
-
+    
     def __init__(self, pic_ID, row_ID, ath_ID, coach_ID, seat_ID):
         self.pic_ID = pic_ID
         self.row_ID = row_ID
@@ -69,7 +69,7 @@ class Photo_seat(db.Model):
         self.coach_ID = coach_ID
         self.seat_ID = seat_ID
 
-#row descriptions and ID (for weird photos)
+#row descriptions ONLY, no people are listed here
 class Row(db.Model):
     __tablename__ = "rows"
     pic_ID = db.Column(db.Integer)
