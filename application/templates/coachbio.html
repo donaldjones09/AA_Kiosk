@@ -8,4 +8,8 @@
 <div class="jumbotron text-center">
   <h2>{{coach['Fname']}} {{coach['Lname']}}</h2>
 </div>
+
+{% for row in rows %}
+<img src="/static/images/{{row['filename']}}.jpg" alt="2012 Track" width="auto" height="auto">
+{% endfor %}
 {% endblock %}
