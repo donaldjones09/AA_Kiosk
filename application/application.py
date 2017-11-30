@@ -37,6 +37,7 @@ def coachindex():
 def coachbio():
     coach_ID = int(session.get("coach_ID"))
     coach = Coach.query.filter_by(coach_ID = coach_ID).first()
-    pictures = db.session.query(Photo).join(Photo_seating, Photo.pic_ID == Photo_seating.pic_ID)
+    pictures = db.engine.execute("SELECT year, filename, sport_name FROM photos INNER JOIN sports ON photos.sport_ID = sports.sport_ID;") #create join here using raw SQL
+    #pictures = db.session.query(Photo).join(Photo_seating, Photo.pic_ID == Photo_seating.pic_ID)
 
     return render_template('coachbio.html', coach = coach, rows = pictures)
