@@ -21,7 +21,9 @@ def athleteindex():
 def athletebio():
     ath_ID = int(session.get("ath_ID"))
     athlete = Athlete.query.filter_by(ath_ID = ath_ID).first()
-    return render_template('athletebio.html', row = athlete)
+    #raw SQL to query every photo that the selected coach is in
+    rows = db.engine.execute("SELECT year, filename, sport_name FROM photo_seating INNER JOIN photos on photo_seating.pic_ID = photos.pic_ID INNER JOIN sports on photos.sport_ID = sports.sport_ID WHERE ath_ID == :ath_ID", ath_ID = ath_ID)
+    return render_template('athletebio.html', athlete = athlete, rows = rows)
 
 @app.route('/coachindex', methods = ["GET", "POST"])
 def coachindex():
@@ -38,6 +40,6 @@ def coachbio():
     coach_ID = int(session.get("coach_ID"))
     coach = Coach.query.filter_by(coach_ID = coach_ID).first()
     #raw SQL to query every photo that the selected coach is in
-    rows = db.engine.execute("SELECT year, filename, sport_name FROM photo_seating INNER JOIN photos on photo_seating.pic_ID = photos.pic_ID INNER JOIN sports on photos.sport_ID = sports.sport_ID WHERE coach_ID = coach_ID")
+    rows = db.engine.execute("SELECT year, filename, sport_name FROM photo_seating INNER JOIN photos on photo_seating.pic_ID = photos.pic_ID INNER JOIN sports on photos.sport_ID = sports.sport_ID WHERE coach_ID == :coach_ID", coach_ID = coach_ID)
 
     return render_template('coachbio.html', coach = coach, rows = rows)
