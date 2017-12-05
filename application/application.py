@@ -43,3 +43,21 @@ def coachbio():
     rows = db.engine.execute("SELECT year, filename, sport_name FROM photo_seating INNER JOIN photos on photo_seating.pic_ID = photos.pic_ID INNER JOIN sports on photos.sport_ID = sports.sport_ID WHERE coach_ID == :coach_ID", coach_ID = coach_ID)
 
     return render_template('coachbio.html', coach = coach, rows = rows)
+
+@app.route('/sportindex', methods = ["GET", "POST"])
+def sportindex():
+    if request.method == "GET":
+        rows = Sport.query.all()
+        return render_template('sportindex.html', rows = rows)
+    else:
+        sport_ID = int(request.form.get("sport"))
+        session['sport_ID'] = sport_ID
+        return redirect(url_for('sporthome'))
+
+@app.route('/sporthome', methods = ["GET"])
+def sporthome():
+    sport_ID = int(session.get("sport_ID"))
+    sport = Sport.query.filter_by(sport_ID = sport_ID).first()
+    #raw SQL to query every photo of the selected sport
+    rows = db.engine.execute("SELECT year, filename FROM photos INNER JOIN sports on photos.sport_ID = sports.sport_ID WHERE sports.sport_ID == :sport_ID", sport_ID = sport_ID)
+    return render_template('sporthome.html', sport = sport, rows = rows)
