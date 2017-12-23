@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sports
+{% endblock %}
+
+{% block main %}
+<div class="jumbotron text-center">
+  <h2>Years</h2>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Year</th>
+    </tr>
+  </thead>
+  <form action="{{ url_for('yearindex') }}" method="post">
+  <tbody>
+    {% for row in rows %}
+    <tr>
+      <td class = "c1"><button type="submit" name="year" value="{{row["year"]}}" type="submit" class="btn btn-primary">{{row['year']}}</button></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

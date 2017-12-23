@@ -1,3 +1,9 @@
+
+.jumbotron{
+color: #000000 !important;
+background-color:none !important;
+}
+
 .container
 {
     /* center contents */
@@ -27,7 +33,6 @@ main .form-control
 {
     /* center form controls */
     display: inline-block;
-
     /* override Bootstrap's 100% width for form controls */
     width: auto;
 }

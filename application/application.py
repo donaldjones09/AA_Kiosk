@@ -61,3 +61,19 @@ def sporthome():
     #raw SQL to query every photo of the selected sport
     rows = db.engine.execute("SELECT year, filename FROM photos INNER JOIN sports on photos.sport_ID = sports.sport_ID WHERE sports.sport_ID == :sport_ID", sport_ID = sport_ID)
     return render_template('sporthome.html', sport = sport, rows = rows)
+
+@app.route('/yearindex', methods = ["GET", "POST"])
+def yearindex():
+    if request.method == "GET":
+        rows = Photo.query.all()
+        return render_template('yearindex.html', rows = rows)
+    else:
+        year = int(request.form.get("year"))
+        session['year'] = year
+        return redirect(url_for('yearhome'))
+
+@app.route('/yearhome', methods = ["GET"])
+def yearhome():
+    year = int(session.get("year"))
+    pictures = db.engine.execute("SELECT sport_name, filename FROM photos INNER JOIN sports on photos.sport_ID = sports.sport_ID WHERE photos.year == :year", year = year)
+    return render_template('yearhome.html', year = year, rows = pictures)
