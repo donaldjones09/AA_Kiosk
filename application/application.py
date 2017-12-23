@@ -65,7 +65,7 @@ def sporthome():
 @app.route('/yearindex', methods = ["GET", "POST"])
 def yearindex():
     if request.method == "GET":
-        rows = Photo.query.all()
+        rows = db.engine.execute("SELECT DISTINCT year FROM photos")
         return render_template('yearindex.html', rows = rows)
     else:
         year = int(request.form.get("year"))
