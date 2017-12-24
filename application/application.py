@@ -10,7 +10,7 @@ def index():
 @app.route('/athleteindex', methods = ["GET", "POST"])
 def athleteindex():
     if request.method == "GET":
-        rows = Athlete.query.all()
+        rows = Athlete.query.order_by(Athlete.Lname).all()
         return render_template('athleteindex.html', rows = rows)
     else:
         ath_ID = int(request.form.get("athlete"))
@@ -28,7 +28,7 @@ def athletebio():
 @app.route('/coachindex', methods = ["GET", "POST"])
 def coachindex():
     if request.method == "GET":
-        rows = Coach.query.all()
+        rows = Coach.query.order_by(Coach.Lname).all()
         return render_template('coachindex.html', rows = rows)
     else:
         coach_ID = int(request.form.get("coach"))
@@ -47,7 +47,7 @@ def coachbio():
 @app.route('/sportindex', methods = ["GET", "POST"])
 def sportindex():
     if request.method == "GET":
-        rows = Sport.query.all()
+        rows = Sport.query.order_by(Sport.sport_name).all()
         return render_template('sportindex.html', rows = rows)
     else:
         sport_ID = int(request.form.get("sport"))
