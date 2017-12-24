@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Athletes
+{% endblock %}
+
+{% block main %}
+
+<div class="jumbotron text-center">
+  <h2>Students</h2>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    {% for row in rows %}
+    <!-- put in a for loop here maybe using modulus to print athletes in grid -->
+    {% endfor %}
+    <div class="col-sm-4" style="background-color:gold;">.col-sm-4</div>
+    <div class="col-sm-4" style="background-color:gold;">.col-sm-4</div>
+    <div class="col-sm-4" style="background-color:gold;">.col-sm-4</div>
+  </div>
+</div>
+
+{% endblock %}
