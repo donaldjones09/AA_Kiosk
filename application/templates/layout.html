@@ -7,7 +7,7 @@
         <meta content="initial-scale=1, width=device-width" name="viewport"/>
 
         <!-- documentation at http://getbootstrap.com/, alternative themes at https://www.bootstrapcdn.com/bootswatch/ -->
-        <!-- CSS src links -->  
+        <!-- CSS src links -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
         <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"/>
         <!-- js scripts -->
@@ -16,33 +16,11 @@
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-        <title>AAG Athletics: {% block title %}{% endblock %}</title>
+        <title>AA Athletics: {% block title %}{% endblock %}</title>
 
     </head>
 
     <body>
-
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-          <div class="navbar-header">
-              <button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-          </div>
-          <div class="collapse navbar-collapse" id="navbar">
-                  <ul class="nav navbar-nav">
-                      <li><a href="{{ url_for('index') }}">Home</a></li>
-                      <li><a href="{{ url_for('athleteindex') }}">Students</a></li>
-                      <li><a href="{{ url_for('coachindex') }}">Coaches</a></li>
-                      <li><a href="{{ url_for('sportindex') }}">Sports</a></li>
-                      <li><a href="{{ url_for('yearindex') }}">Years</a></li>
-                  </ul>
-          </div>
-      </div>
-    </nav>
 
     {% if get_flashed_messages() %}
         <header>

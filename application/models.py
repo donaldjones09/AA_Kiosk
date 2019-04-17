@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 #Flask app configurations
 app = Flask(__name__)
-app.config['DEBUG'] = True
+app.config['DEBUG'] = False
 app.secret_key = b'\xeev\xc5\xe0\x0c9\x94\x1f\xad\xff\x02\xc2\xaa_bx\x0e\xf3*\x05\x01"\x02:'
 # Flask-SQLAlchemy
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

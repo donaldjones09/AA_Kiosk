@@ -2,6 +2,7 @@ from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import and_
 from models import *
+import string
 
 @app.route('/')
 def index():
@@ -48,24 +49,42 @@ def coachbio():
 def sportindex():
     if request.method == "GET":
         rows = Sport.query.order_by(Sport.sport_name).all()
-        return render_template('sportindex.html', rows = rows)
+        return render_template('listsports.html', rows = rows)
     else:
         sport_ID = int(request.form.get("sport"))
         session['sport_ID'] = sport_ID
         return redirect(url_for('sporthome'))
 
-@app.route('/sporthome', methods = ["GET"])
+@app.route('/sporthome', methods = ["GET", "POST"])
 def sporthome():
-    sport_ID = int(session.get("sport_ID"))
+    if request.method == "GET":
+        sport_ID = int(session.get("sport_ID"))
+        sport = Sport.query.filter_by(sport_ID = sport_ID).first()
+        #raw SQL to query every photo of the selected sport
+        rows = db.engine.execute("SELECT year, filename, pic_ID FROM photos INNER JOIN sports on photos.sport_ID = sports.sport_ID WHERE sports.sport_ID == :sport_ID ORDER BY year", sport_ID = sport_ID)
+        return render_template('sporthome.html', sport = sport, rows = rows)
+    else:
+        pic_ID = int(request.form.get("pic-id"))
+        session['pic_ID'] = pic_ID
+        return redirect(url_for('sportyear'))
+
+@app.route('/sportyear', methods = ["GET"])
+def sportyear():
+    pic_ID = int(session.get("pic_ID"))
+    row = Photo.query.filter_by(pic_ID = pic_ID).first()
+    filename = row.filename
+    filename = filename.replace('\\', '/')
+    filename = filename.replace('E:', '/static/images')
+    filename = filename + ".jpg"
+    sport_ID = row.sport_ID
     sport = Sport.query.filter_by(sport_ID = sport_ID).first()
-    #raw SQL to query every photo of the selected sport
-    rows = db.engine.execute("SELECT year, filename FROM photos INNER JOIN sports on photos.sport_ID = sports.sport_ID WHERE sports.sport_ID == :sport_ID", sport_ID = sport_ID)
-    return render_template('sporthome.html', sport = sport, rows = rows)
+    #query database for the photo of a specific sport from a specific year
+    return render_template('sportyear.html', row = row, sport = sport, filename = filename)
 
 @app.route('/yearindex', methods = ["GET", "POST"])
 def yearindex():
     if request.method == "GET":
-        rows = db.engine.execute("SELECT DISTINCT year FROM photos")
+        rows = db.engine.execute("SELECT DISTINCT year FROM photos ORDER BY year ASC")
         return render_template('yearindex.html', rows = rows)
     else:
         year = int(request.form.get("year"))

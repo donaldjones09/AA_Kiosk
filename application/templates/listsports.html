@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sports
+{% endblock %}
+
+{% block main %}
+<html><head><title>The Albany Academies</title><style>body{margin: 0; padding: 0;color:red;background:#696969 url('/static/images/bg.jpg') fixed right no-repeat;}a{color:#212121;}font{color:#212121;}</style></head><body>
+<div style="position:fixed;width100%;top:0;bottom:auto;"><table style="position:fixed;" width=100% border=0 cellpadding=10 cellspacing=0><tr  style="vertical-align:middle" bgcolor="#EF5350" height=100><td  style="vertical-align:middle"><a href="{{ url_for('index')}}"><img src="/static/images/home.png" width=150 height=150 ></a></td><td   style="vertical-align:middle" style="vertical-align:middle"><font size="+20" style="font-family:verdana;color:#eeeeee"><b>Sports</b></font></td></tr></table></div><div style="margin-top:170px">
+<form action="{{ url_for('sportindex') }}" method="post">
+<table width=75% align=center><tr>
+<td width=25% ><button name="sport" type="submit" value=7><font size="+3">Baseball</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=8><font size="+3">Basketball</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=11><font size="+3">Bowling</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=23><font size="+3">Cross Country</font></button></td>
+</tr><tr><td colspan=6>&nbsp;</td></tr><tr>
+<td width=25% ><button name="sport" type="submit" value=6><font size="+3">Football</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=21><font size="+3">Golf</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=17><font size="+3">Hockey</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=24><font size="+3">Independent Hockey</font></button></td>
+</tr><tr><td colspan=6>&nbsp;</td></tr><tr>
+<td width=25% ><button name="sport" type="submit" value=16><font size="+3">Indoor Track</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=22><font size="+3">Lacrosse</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=9><font size="+3">Rifle Team</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=12><font size="+3">Rugby</font></button></td>
+</tr><tr><td colspan=6>&nbsp;</td></tr><tr>
+<td width=25% ><button name="sport" type="submit" value=20><font size="+3">Skiing</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=18><font size="+3">Soccer</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=13><font size="+3">Squash</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=19><font size="+3">Swimming & Diving</font></button></td>
+</tr><tr><td colspan=6>&nbsp;</td></tr><tr>
+<td width=25% ><button name="sport" type="submit" value=10><font size="+3">Tennis</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=15><font size="+3">Track & Field</font></button></td>
+<td width=25% ><button name="sport" type="submit" value=14><font size="+3">Wrestling</font></button></td>
+</tr></table>
+</form>
+</div><SCRIPT>showdiv('mainletters');</SCRIPT></body></html>
+{% endblock %}

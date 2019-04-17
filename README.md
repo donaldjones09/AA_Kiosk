@@ -1,5 +1,5 @@
 # AA_Kiosk
-Database for AAG sports
+Database for AA sports
 
 Instructions:
   Install pip (if needed)
