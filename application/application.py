@@ -47,6 +47,7 @@ def coachbio():
 
 @app.route('/sportindex', methods = ["GET", "POST"])
 def sportindex():
+    #list of all sports
     if request.method == "GET":
         rows = Sport.query.order_by(Sport.sport_name).all()
         return render_template('listsports.html', rows = rows)
@@ -57,11 +58,12 @@ def sportindex():
 
 @app.route('/sporthome', methods = ["GET", "POST"])
 def sporthome():
+    #list of all years of a specific sport
     if request.method == "GET":
         sport_ID = int(session.get("sport_ID"))
         sport = Sport.query.filter_by(sport_ID = sport_ID).first()
         #raw SQL to query every photo of the selected sport
-        rows = db.engine.execute("SELECT year, filename, pic_ID FROM photos INNER JOIN sports on photos.sport_ID = sports.sport_ID WHERE sports.sport_ID == :sport_ID ORDER BY year", sport_ID = sport_ID)
+        rows = db.engine.execute("SELECT year, filename, pic_ID FROM photos INNER JOIN sports ON photos.sport_ID = sports.sport_ID WHERE sports.sport_ID == :sport_ID ORDER BY year", sport_ID = sport_ID)
         return render_template('sporthome.html', sport = sport, rows = rows)
     else:
         pic_ID = int(request.form.get("pic-id"))
@@ -71,14 +73,17 @@ def sporthome():
 @app.route('/sportyear', methods = ["GET"])
 def sportyear():
     pic_ID = int(session.get("pic_ID"))
+    #query database for the photo of a specific sport from a specific year, by photo_ID
     row = Photo.query.filter_by(pic_ID = pic_ID).first()
+    #query database for all athletes names in the photo
+    #need to join photos, photo_seating, and athletes and coaches tables.
+    #athletes = db.engine.execute("SELECT Fname, Lname FROM athletes INNER JOIN photo_seating ON athletes.ath_ID = photo_seating.ath_ID WHERE ")
     filename = row.filename
     filename = filename.replace('\\', '/')
     filename = filename.replace('E:', '/static/images')
     filename = filename + ".jpg"
     sport_ID = row.sport_ID
     sport = Sport.query.filter_by(sport_ID = sport_ID).first()
-    #query database for the photo of a specific sport from a specific year
     return render_template('sportyear.html', row = row, sport = sport, filename = filename)
 
 @app.route('/yearindex', methods = ["GET", "POST"])
