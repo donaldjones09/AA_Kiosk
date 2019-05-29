@@ -89,22 +89,25 @@ def sportyear():
     sport = Sport.query.filter_by(sport_ID = sport_ID).first()
     #query row descriptions
     rows = Row.query.filter_by(pic_ID = pic_ID)
-    people_numbers = db.engine.execute("SELECT ath_ID, coach_ID photo_seating.row_ID FROM photo_seating INNER JOIN rows ON rows.row_ID = photo_seating.row_ID WHERE rows.pic_ID = :pic_ID", pic_ID = pic_ID)
+    people_numbers = db.engine.execute("SELECT ath_ID, coach_ID, photo_seating.row_ID FROM photo_seating INNER JOIN rows ON rows.row_ID = photo_seating.row_ID WHERE rows.pic_ID = :pic_ID", pic_ID = pic_ID)
     athletes = []
     for person in people_numbers:
         ath_ID = person.ath_ID
         coach_ID = person.coach_ID
         if ath_ID != 0:
             sing_athlete = Athlete.query.filter_by(ath_ID = ath_ID).first()
-            print("ath_ID" + str(ath_ID))
             firstName = sing_athlete.Fname
             lastName = sing_athlete.Lname
-            #store row_ID in dictionary
-            r_ID = student.row_ID
-            ath = {"Fname": firstName, "Lname": lastName, "row_ID": r_ID}
-            athletes.append(ath)
         else:
-            sing_coach = Coach.query.filter_by(coach_ID = student)
+            sing_coach = Coach.query.filter_by(coach_ID = coach_ID).first()
+            if str(sing_coach.Fname) == "Coach" or str(sing_coach.Fname) == "coach":
+                firstName = sing_coach.Fname
+            else:
+                firstName = "Coach " + str(sing_coach.Fname)
+            lastName = sing_coach.Lname
+        r_ID = person.row_ID
+        new_person = {"Fname": firstName, "Lname": lastName, "row_ID": r_ID}
+        athletes.append(new_person)
     return render_template('sportyear.html', rows = rows, photo = photo, sport = sport, filename = filename, athletes = athletes)
 
 @app.route('/yearindex', methods = ["GET", "POST"])
