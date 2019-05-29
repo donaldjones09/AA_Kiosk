@@ -5,31 +5,16 @@
 </head>
 <body>
 <div style="position:fixed;width100%;top:0;bottom:auto;"><table style="position:fixed;" width=100% border=0 cellpadding=10 cellspacing=0><tr  style="vertical-align:middle" bgcolor="#EF5350" height=100><td  style="vertical-align:middle"><a href="{{url_for('index')}}"><img src="/static/images/home.png" width=150 height=150 ></a></td><td   style="vertical-align:middle" style="vertical-align:middle"><font size="+20" style="font-family:verdana;color:#eeeeee">
-<b>{{row['year']}} {{sport['sport_name']}}</b></font></td></tr></table></div><div style="margin-top:170px"><center><img src="{{filename}}"><br>
+<b>{{photo['year']}} {{sport['sport_name']}}</b></font></td></tr></table></div><div style="margin-top:170px"><center><img src="{{filename}}"><br>
 <table width=50% border=1 bgcolor=white>
-<tr><td>Front</td><td>
-<span style="white-space: pre;"><a href="f:\website\site\stud\107.html"><font size="+2">Henry Slingerland</font></a></span>&nbsp;&nbsp;&nbsp;
-<span style="white-space: pre;"><a href="f:\website\site\stud\101.html"><font size="+2">Millard Nasholds</font></a></span>&nbsp;&nbsp;&nbsp;
-<span style="white-space: pre;"><a href="f:\website\site\stud\109.html"><font size="+2">Philip Stearns</font></a></span>&nbsp;&nbsp;&nbsp;
-<span style="white-space: pre;"><a href="f:\website\site\stud\108.html"><font size="+2">Douglas Stearns</font></a></span>&nbsp;&nbsp;&nbsp;
-<span style="white-space: pre;"><a href="f:\website\site\stud\90.html"><font size="+2">William Hamblin</font></a></span>&nbsp;&nbsp;&nbsp;
-</td></tr>
-<tr><td>Middle</td><td>
-<span style="white-space: pre;"><a href="f:\website\site\stud\124.html"><font size="+2">Carroll Fossett</font></a></span>&nbsp;&nbsp;&nbsp;
-<span style="white-space: pre;"><a href="f:\website\site\stud\213.html"><font size="+2">Thomas Wheeler, Jr.</font></a></span>&nbsp;&nbsp;&nbsp;
-<span style="white-space: pre;"><a href="f:\website\site\stud\166.html"><font size="+2">Raymond Kirk</font></a></span>&nbsp;&nbsp;&nbsp;
-<span style="white-space: pre;"><a href="f:\website\site\stud\142.html"><font size="+2">Elmer Seay</font></a></span>&nbsp;&nbsp;&nbsp;
-<span style="white-space: pre;"><a href="f:\website\site\stud\0.html"><font size="+2">Coach William G. "Country" Morris</font></a></span>&nbsp;&nbsp;&nbsp;
-</td></tr>
-<tr><td>on Ground</td><td>
-<span style="white-space: pre;"><a href="f:\website\site\stud\291.html"><font size="+2">Rufus Burlingame</font></a></span>&nbsp;&nbsp;&nbsp;
-</td></tr>
-<tr><td>Top</td><td>
-<span style="white-space: pre;"><a href="f:\website\site\stud\144.html"><font size="+2">Ward Tibbitts</font></a></span>&nbsp;&nbsp;&nbsp;
-<span style="white-space: pre;"><a href="f:\website\site\stud\136.html"><font size="+2">Peter McCarthy</font></a></span>&nbsp;&nbsp;&nbsp;
-<span style="white-space: pre;"><a href="f:\website\site\stud\115.html"><font size="+2">Donald Bridge</font></a></span>&nbsp;&nbsp;&nbsp;
-<span style="white-space: pre;"><a href="f:\website\site\stud\4000.html"><font size="+2">P. Steminsky</font></a></span>&nbsp;&nbsp;&nbsp;
-</td></tr></table><br></center>
+{% for row in rows %}
+<tr><td>{{row['row_desc']}}</td><td>
+{% for athlete in athletes %}
+{% if athlete['row_ID'] == row['row_ID']%}
+<span style="white-space: pre;"><a href="f:\website\site\stud\107.html"><font size="+2">{{athlete['Fname']}} {{athlete['Lname']}}</font></a></span>&nbsp;&nbsp;&nbsp;
+{% endif %}
+{% endfor %}
+{% endfor %}
 </div>
 <SCRIPT>showdiv('mainletters');</SCRIPT>
 </body>

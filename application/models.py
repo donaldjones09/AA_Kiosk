@@ -81,6 +81,7 @@ class Row(db.Model):
         self.row_desc = row_desc
         self.row_ID = row_ID
 
+#sport name and ID
 class Sport(db.Model):
     __tablename__ = "sports"
     sport_name = db.Column(db.String(50))
