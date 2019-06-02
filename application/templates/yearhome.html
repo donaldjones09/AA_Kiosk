@@ -1,4 +1,10 @@
-<html>
+{% extends "layout.html" %}
+
+{% block title %}
+  Years
+{% endblock %}
+
+{% block main %}
 <head>
   <style>body{margin: 0; padding: 0;color:red;background:#696969 url('/static/images/bg.jpg') fixed right no-repeat;}a{color:#212121;}font{color:#212121;}</style>
 </head>
@@ -7,8 +13,9 @@
 <form action="{{ url_for('yearhome') }}" method="post">
 {% for picture in pictures %}
 <hr><font size="+2">{{year}} {{picture['sport_name']}}</font></h2><br>
-<button type="submit" name="pic_ID" value="{{picture['pic_ID']}}" width=50% height = 50%>
+<button class="btn btn-link" type="submit" name="pic_ID" value="{{picture['pic_ID']}}" width=50% height = 50%>
 <img src="{{picture['filename']}}" width="50%" height="50%"><br>
 </button>
 {% endfor %}
 </form>
+{% endblock %}

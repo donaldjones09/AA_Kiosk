@@ -1,4 +1,10 @@
-<html>
+{% extends "layout.html" %}
+
+{% block title %}
+    Sports
+{% endblock %}
+
+{% block main %}
 <head>
 <style>body{margin: 0; padding: 0;color:red;background:#696969 url('/static/images/bg.jpg') fixed right no-repeat;}a{color:#212121;}font{color:#212121;}</style>
 </head>
@@ -12,11 +18,11 @@
 {% if loop.index % 5 == 0 %}
 </tr><tr>
 {% endif %}
-<td width=25% ><button name="pic-id" type="submit" value="{{row['pic_ID']}}" ><font size="+3">{{row['year']}}</font></button></td>
+<td width=25% ><button class="btn btn-link" name="pic-id" type="submit" value="{{row['pic_ID']}}" ><font size="+3">{{row['year']}}</font></button></td>
 {% endfor %}
 </tr>
 </table>
 </form>
 </div>
 </body>
-</html>
+{% endblock %}

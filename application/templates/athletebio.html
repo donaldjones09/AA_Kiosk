@@ -1,4 +1,10 @@
-<html>
+{% extends "layout.html" %}
+
+{% block title %}
+  Athletes
+{% endblock %}
+
+{% block main %}
 <head>
   <style>body{margin: 0; padding: 0;color:red;background:#696969 url('/static/images/bg.jpg') fixed right no-repeat;}a{color:#212121;}font{color:#212121;}</style>
 </head>
@@ -12,3 +18,4 @@
 </button>
 {% endfor %}
 </form>
+{% endblock %}

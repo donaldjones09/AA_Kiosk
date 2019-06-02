@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Coaches
+    Years
 {% endblock %}
 
 {% block main %}
@@ -22,7 +22,7 @@
 {% if loop.index % 5 == 0 %}
 </tr><tr>
 {% endif %}
-<td width=25% ><button name="year" type="submit" value="{{year['year']}}" ><font size="+3">{{year['year']}}</font></button></td>
+<td width=25% ><button class="btn btn-link" name="year" type="submit" value="{{year['year']}}" ><font size="+3">{{year['year']}}</font></button></td>
 {% endfor %}
 </tr>
 </table>

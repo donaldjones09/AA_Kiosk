@@ -1,0 +1,57 @@
+body, html {
+    height: 100%;
+}
+
+.bg {
+    /* The image used */
+    background-image: url("bluebg.jpg");
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: repeat-y;
+    background-size: cover;
+}
+
+.frosted-bg {
+    background: inherit;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+    box-sizing: border-box;
+    box-shadow: 0 .5em 1em rgba(0, 0, 0, .3)
+}
+.frosted-bg::before {
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: inherit;
+    box-shadow: inset 0 0 3000px rgba(255, 255, 255, .5);
+    filter: blur(10px);
+    margin: -20px;
+}
+
+/* Hide all steps in signup by default: */
+.tab {
+    display: none;
+}
+
+/* adjust progress bar width for signup */
+.progress {
+    margin-bottom: 5px;
+    height: 15px;
+  }
+/* button style for instagram */
+.btn-insta {
+  color: #fff;
+  background-color: #8a3ab9;
+  border-color: #8a3ab9;
+}
+
+.btn-insta:hover {
+  color: #fff;
+  background-color: #7f29b2;
+  border-color: #0062cc;
+}

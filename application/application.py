@@ -129,41 +129,53 @@ def sporthome():
         return redirect(url_for('sportyear'))
 
 #DONE
-@app.route('/sportyear', methods = ["GET"])
+@app.route('/sportyear', methods = ["GET", "POST"])
 def sportyear():
-    pic_ID = int(session.get("pic_ID"))
-    #query database for the photo of a specific sport from a specific year, by photo_ID
-    photo = Photo.query.filter_by(pic_ID = pic_ID).first()
-    #construct filename
-    filename = filename_construct(photo.filename)
-    sport_ID = photo.sport_ID
-    #query for sport's name
-    sport = Sport.query.filter_by(sport_ID = sport_ID).first()
-    #query row descriptions
-    rows = Row.query.filter_by(pic_ID = pic_ID)
-    people_numbers = db.engine.execute("SELECT ath_ID, coach_ID, photo_seating.row_ID FROM photo_seating INNER JOIN rows ON rows.row_ID = photo_seating.row_ID WHERE rows.pic_ID = :pic_ID", pic_ID = pic_ID)
-    athletes = []
-    for person in people_numbers:
-        ath_ID = person.ath_ID
-        coach_ID = person.coach_ID
-        firstName=""
-        lastName=""
-        if ath_ID != 0:
-            sing_athlete = Athlete.query.filter_by(ath_ID = ath_ID).first()
-            firstName = sing_athlete.Fname
-            lastName = sing_athlete.Lname
+    if request.method == "GET":
+        pic_ID = int(session.get("pic_ID"))
+        #query database for the photo of a specific sport from a specific year, by photo_ID
+        photo = Photo.query.filter_by(pic_ID = pic_ID).first()
+        #construct filename
+        filename = filename_construct(photo.filename)
+        sport_ID = photo.sport_ID
+        #query for sport's name
+        sport = Sport.query.filter_by(sport_ID = sport_ID).first()
+        #query row descriptions
+        rows = Row.query.filter_by(pic_ID = pic_ID)
+        people_numbers = db.engine.execute("SELECT ath_ID, coach_ID, photo_seating.row_ID FROM photo_seating INNER JOIN rows ON rows.row_ID = photo_seating.row_ID WHERE rows.pic_ID = :pic_ID", pic_ID = pic_ID)
+        athletes = []
+        for person in people_numbers:
+            ath_ID = person.ath_ID
+            coach_ID = person.coach_ID
+            firstName=""
+            lastName=""
+            if ath_ID != 0:
+                sing_athlete = Athlete.query.filter_by(ath_ID = ath_ID).first()
+                firstName = sing_athlete.Fname
+                lastName = sing_athlete.Lname
+                personID = ath_ID
+            else:
+                sing_coach = Coach.query.filter_by(coach_ID = coach_ID).first()
+                personID = "C" + str(coach_ID)
+                if sing_coach != None:
+                    if str(sing_coach.Fname) == "Coach" or str(sing_coach.Fname) == "coach":
+                        firstName = sing_coach.Fname
+                    else:
+                        firstName = "Coach " + str(sing_coach.Fname)
+                        lastName = sing_coach.Lname
+            r_ID = person.row_ID
+            new_person = {"Fname": firstName, "Lname": lastName, "row_ID": r_ID, "ath_ID": personID}
+            athletes.append(new_person)
+        return render_template('sportyear.html', rows = rows, photo = photo, sport = sport, filename = filename, athletes = athletes)
+    else:
+        ID = str(request.form.get("person-ID"))
+        if ID[0] == "C":
+            ID = ID.replace('C', '')
+            session['coach_ID'] = ID
+            return redirect(url_for('coachbio'))
         else:
-            sing_coach = Coach.query.filter_by(coach_ID = coach_ID).first()
-            if sing_coach != None:
-                if str(sing_coach.Fname) == "Coach" or str(sing_coach.Fname) == "coach":
-                    firstName = sing_coach.Fname
-                else:
-                    firstName = "Coach " + str(sing_coach.Fname)
-                    lastName = sing_coach.Lname
-        r_ID = person.row_ID
-        new_person = {"Fname": firstName, "Lname": lastName, "row_ID": r_ID}
-        athletes.append(new_person)
-    return render_template('sportyear.html', rows = rows, photo = photo, sport = sport, filename = filename, athletes = athletes)
+            session['ath_ID'] = ID
+            return redirect(url_for('athletebio'))
 
 #DONE
 @app.route('/yearindex', methods = ["GET", "POST"])
