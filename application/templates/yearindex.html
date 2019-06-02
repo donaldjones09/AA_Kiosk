@@ -1,27 +1,32 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Sports
+    Coaches
 {% endblock %}
 
 {% block main %}
-<div class="jumbotron text-center">
-  <h2>Years</h2>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Year</th>
-    </tr>
-  </thead>
-  <form action="{{ url_for('yearindex') }}" method="post">
-  <tbody>
-    {% for row in rows %}
-    <tr>
-      <td class = "c1"><button type="submit" name="year" value="{{row["year"]}}" type="submit" class="btn btn-primary">{{row['year']}}</button></td>
-    </tr>
-    {% endfor %}
-  </tbody>
+<head>
+<style>body{margin: 0; padding: 0;color:red;background:#696969 url('/static/images/bg.jpg') fixed right no-repeat;}a{color:#212121;}font{color:#212121;}</style>
+</head>
+<body>
+<div style="position:fixed;width100%;top:0;bottom:auto;">
+<table style="position:fixed;" width=100% border=0 cellpadding=10 cellspacing=0>
+  <tr style="vertical-align:middle" bgcolor="#29B6F6" height=100><td  style="vertical-align:middle"><a href="{{url_for('index')}}"><img src="/static/images/home.png" width=150 height=150 ></a></td><td style="vertical-align:middle" style="vertical-align:middle"><font size="+20" style="font-family:verdana;color:#eeeeee"><b>Years</b></font></td></tr>
 </table>
-
+</div>
+<div style="margin-top:170px">
+<form action="{{ url_for('yearindex') }}" method="post">
+<table width=75% align=center>
+<tr>
+{%for year in years%}
+{% if loop.index % 5 == 0 %}
+</tr><tr>
+{% endif %}
+<td width=25% ><button name="year" type="submit" value="{{year['year']}}" ><font size="+3">{{year['year']}}</font></button></td>
+{% endfor %}
+</tr>
+</table>
+</form>
+</div>
+</body>
 {% endblock %}
