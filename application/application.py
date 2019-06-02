@@ -9,23 +9,48 @@ import string
 def index():
     return render_template('index.html')
 
-@app.route('/athleteindex', methods = ["GET", "POST"])
-def athleteindex():
+@app.route('/athleteletters', methods = ["GET", "POST"])
+def athleteletters():
     if request.method == "GET":
-        rows = Athlete.query.order_by(Athlete.Lname).all()
-        return render_template('athleteindex.html', rows = rows)
+        return render_template('athleteletters.html')
     else:
-        ath_ID = int(request.form.get("athlete"))
-        session['ath_ID'] = ath_ID
+        firstLetter = str(request.form.get("letter"))
+        session['firstLetter'] = firstLetter
+        return redirect(url_for('athletenames'))
+
+@app.route('/athletenames', methods = ["GET", "POST"])
+def athletenames():
+    if request.method == "GET":
+        firstLetter = session.get("firstLetter")
+        Lname = str(firstLetter) + "%"
+        athletes = db.engine.execute("SELECT * FROM athletes WHERE Lname LIKE :Lname ORDER BY Lname", Lname = Lname)
+        return render_template('athletenames.html', athletes = athletes)
+    else:
+        session['ath_ID'] = int(request.form.get("ath-ID"))
         return redirect(url_for('athletebio'))
 
-@app.route('/athletebio', methods = ["GET"])
+@app.route('/athletebio', methods = ["GET", "POST"])
 def athletebio():
-    ath_ID = int(session.get("ath_ID"))
-    athlete = Athlete.query.filter_by(ath_ID = ath_ID).first()
-    #raw SQL to query every photo that the selected athlete is in
-    rows = db.engine.execute("SELECT year, filename, sport_name FROM photo_seating INNER JOIN photos on photo_seating.pic_ID = photos.pic_ID INNER JOIN sports on photos.sport_ID = sports.sport_ID WHERE ath_ID == :ath_ID", ath_ID = ath_ID)
-    return render_template('athletebio.html', athlete = athlete, rows = rows)
+    if request.method == "GET":
+        ath_ID = int(session.get("ath_ID"))
+        athlete = Athlete.query.filter_by(ath_ID = ath_ID).first()
+        photoSeats = Photo_seating.query.filter_by(ath_ID = ath_ID).all()
+        pictures = []
+        for picture in photoSeats:
+            row_ID = picture.row_ID
+            pic = Row.query.filter_by(row_ID = row_ID).distinct(Row.pic_ID).first()
+            pic_ID = pic.pic_ID
+            photo = Photo.query.filter_by(pic_ID = pic_ID).first()
+            filename = filename_construct(photo.filename)
+            sport = Sport.query.filter_by(sport_ID = photo.sport_ID).first()
+            sportName = sport.sport_name
+            newPicture = {"year": photo.year, "filename": filename, "sport_name": sportName, "pic_ID": pic_ID}
+            pictures.append(newPicture)
+        return render_template('athletebio.html', athlete = athlete, pictures = pictures)
+    else:
+        pic_ID = int(request.form.get("pic-id"))
+        session['pic_ID'] = pic_ID
+        return redirect(url_for('sportyear'))
 
 #DONE
 #Index of letters for coaches
@@ -74,7 +99,7 @@ def coachbio():
     else:
         pic_ID = int(request.form.get("pic-id"))
         session['pic_ID'] = pic_ID
-        return redirect(url_for(sportyear))
+        return redirect(url_for('sportyear'))
 
 #DONE
 #Lists all sports by name
