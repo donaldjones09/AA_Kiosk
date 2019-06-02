@@ -28,6 +28,7 @@ def athletebio():
     return render_template('athletebio.html', athlete = athlete, rows = rows)
 
 #DONE
+#Index of letters for coaches
 @app.route('/coachindex', methods = ["GET", "POST"])
 def coachletters():
     if request.method == "GET":
@@ -37,6 +38,7 @@ def coachletters():
         session['firstLetter'] = firstLetter
         return redirect(url_for('coachnames'))
 
+#DONE
 #lists all peoples names with a certain letter
 @app.route('/coachnames', methods = ["GET", "POST"])
 def coachnames():
@@ -46,22 +48,38 @@ def coachnames():
         coaches = db.engine.execute("SELECT * FROM coaches WHERE Lname LIKE :Lname ORDER BY Lname", Lname = Lname)
         return render_template('coachnames.html', coaches = coaches)
     else:
+        session['coach_ID'] = int(request.form.get("coach-ID"))
         return redirect(url_for('coachbio'))
 
+#DONE
 #lists every picture the coach is in
-@app.route('/coachbio', methods = ["GET"])
+@app.route('/coachbio', methods = ["GET", "POST"])
 def coachbio():
-    coach_ID = int(session.get("coach_ID"))
-    coach = Coach.query.filter_by(coach_ID = coach_ID).first()
-    #raw SQL to query every photo that the selected coach is in
-    #rows = db.engine.execute("SELECT year, filename, sport_name FROM photo_seating INNER JOIN photos on photo_seating.pic_ID = photos.pic_ID INNER JOIN sports on photos.sport_ID = sports.sport_ID WHERE coach_ID == :coach_ID", coach_ID = coach_ID)
-
-    return render_template('coachbio.html', coach = coach, rows = rows)
+    if request.method == "GET":
+        coach_ID = int(session.get("coach_ID"))
+        coach = Coach.query.filter_by(coach_ID = coach_ID).first()
+        photoSeats = Photo_seating.query.filter_by(coach_ID = coach_ID).all()
+        pictures = []
+        for picture in photoSeats:
+            row_ID = picture.row_ID
+            pic = Row.query.filter_by(row_ID = row_ID).distinct(Row.pic_ID).first()
+            pic_ID = pic.pic_ID
+            photo = Photo.query.filter_by(pic_ID = pic_ID).first()
+            filename = filename_construct(photo.filename)
+            sport = Sport.query.filter_by(sport_ID = photo.sport_ID).first()
+            sportName = sport.sport_name
+            newPicture = {"year": photo.year, "filename": filename, "sport_name": sportName, "pic_ID": pic_ID}
+            pictures.append(newPicture)
+        return render_template('coachbio.html', coach = coach, pictures = pictures)
+    else:
+        pic_ID = int(request.form.get("pic-id"))
+        session['pic_ID'] = pic_ID
+        return redirect(url_for(sportyear))
 
 #DONE
+#Lists all sports by name
 @app.route('/sportindex', methods = ["GET", "POST"])
 def sportindex():
-    #list of all sports
     if request.method == "GET":
         sports = Sport.query.order_by(Sport.sport_name).all()
         return render_template('sportindex.html', sports = sports)

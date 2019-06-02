@@ -1,0 +1,25 @@
+<html>
+<head>
+<style>body{margin: 0; padding: 0;color:red;background:#696969 url('/static/images/bg.jpg') fixed right no-repeat;}a{color:#212121;}font{color:#212121;}</style>
+</head>
+
+<body>
+<div style="position:fixed;width100%;top:0;bottom:auto;"><table style="position:fixed;" width=100% border=0 cellpadding=10 cellspacing=0><tr style="vertical-align:middle" bgcolor="#757575" height=100><td  style="vertical-align:middle"><a href="{{url_for('index')}}"><img src="/static/images/home.png" width=150 height=150 ></a></td><td style="vertical-align:middle" style="vertical-align:middle"><font size="+20" style="font-family:verdana;color:#eeeeee"><b>Coaches</b></font></td></tr>
+</table>
+</div>
+<div style="margin-top:170px">
+<form action="{{ url_for('coachnames') }}" method="post">
+<table width=75% align=center>
+<tr>
+{%for coach in coaches%}
+{% if loop.index % 2 == 0 %}
+</tr><tr>
+{% endif %}
+<td width=25% ><button name="coach-ID" type="submit" value="{{coach['coach_ID']}}" ><font size="+3">{{coach['Fname']}} {{coach['Lname']}}</font></button></td>
+{% endfor %}
+</tr>
+</table>
+</form>
+</div>
+</body>
+</html>

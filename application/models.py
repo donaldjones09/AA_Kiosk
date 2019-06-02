@@ -56,7 +56,6 @@ class Photo(db.Model):
 #lists everyone in a photo, includes no description of rows
 class Photo_seating(db.Model):
     __tablename__ = "photo_seating"
-    pic_ID = db.Column(db.Integer)
     row_ID = db.Column(db.Integer)
     ath_ID = db.Column(db.Integer)
     coach_ID = db.Column(db.Integer)
