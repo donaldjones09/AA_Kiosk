@@ -91,11 +91,14 @@ def coachbio():
         for picture in photoSeats:
             row_ID = picture.row_ID
             pic = Row.query.filter_by(row_ID = row_ID).distinct(Row.pic_ID).first()
-            pic_ID = pic.pic_ID
+            if pic != None:
+                pic_ID = pic.pic_ID
             photo = Photo.query.filter_by(pic_ID = pic_ID).first()
-            filename = filename_construct(photo.filename)
+            if photo != None:
+                filename = filename_construct(photo.filename)
             sport = Sport.query.filter_by(sport_ID = photo.sport_ID).first()
-            sportName = sport.sport_name
+            if sport != None:
+                sportName = sport.sport_name
             newPicture = {"year": photo.year, "filename": filename, "sport_name": sportName, "pic_ID": pic_ID}
             pictures.append(newPicture)
         #sort the pictures by year in descending order
@@ -167,7 +170,7 @@ def sportyear():
                         firstName = sing_coach.Fname
                     else:
                         firstName = "Coach " + str(sing_coach.Fname)
-                        lastName = sing_coach.Lname
+                    lastName = sing_coach.Lname
             r_ID = person.row_ID
             new_person = {"Fname": firstName, "Lname": lastName, "row_ID": r_ID, "ath_ID": personID}
             athletes.append(new_person)
@@ -234,4 +237,4 @@ def addpicture():
         #rows = []
         #pic_ID =
         #for x in range(1,6):
-        return redirect(url_for('addpicture'))
+        return redirect(url_for('index'))

@@ -6,23 +6,41 @@
 
 {% block main %}
 <head>
-  <style>body{margin: 0; padding: 0;color:red;background:#696969 url('/static/images/bg.jpg') fixed right no-repeat;}a{color:#212121;}font{color:#212121;}</style>
+  <style>body{margin: 0; padding: 0;color:red;}a{color:#212121;}font{color:#212121;}</style>
 </head>
 <body>
-<div style="position:fixed;width100%;top:0;bottom:auto;"><table style="position:fixed;" width=100% border=0 cellpadding=10 cellspacing=0><tr  style="vertical-align:middle" bgcolor="#EF5350" height=100><td  style="vertical-align:middle"><a href="{{url_for('index')}}"><img src="/static/images/home.png" width=150 height=150 ></a></td><td   style="vertical-align:middle" style="vertical-align:middle"><font size="+20" style="font-family:verdana;color:#eeeeee">
-<b>{{photo['year']}} {{sport['sport_name']}}</b></font></td></tr></table></div>
-<div style="margin-top:170px"><center><img src="{{filename}}"><br>
+<div style="position:fixed;width100%;top:0;bottom:auto;">
+<table style="position:fixed;" width=100% border=0 cellpadding=10 cellspacing=0>
+<tr style="vertical-align:middle" bgcolor="#EF5350" height=100>
+<td style="vertical-align:middle">
+<a href="{{url_for('index')}}"><img src="/static/images/home.png" width=150 height=150 ></a>
+</td><td style="vertical-align:middle" style="vertical-align:middle">
+<font size="+20" style="font-family:verdana;color:#eeeeee"><b>{{photo['year']}} {{sport['sport_name']}}</b></font></td>
+</tr>
+</table>
+</div>
+<div style="margin-top:170px">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<img src="{{filename}}" class="img-fluid">
+</div>
+</div>
+<div class="row">
+<div class="col-12">
 <form action="{{ url_for('sportyear') }}" method="post">
-<table width=50% border=1 bgcolor=white>
+<table border=1 bgcolor=white>
 {% for row in rows %}
 <tr><td>{{row['row_desc']}}</td><td>
 {% for athlete in athletes %}
 {% if athlete['row_ID'] == row['row_ID']%}
-<span style="white-space: pre;"><button class="btn btn-link" name="person-ID" type="submit" value="{{athlete['ath_ID']}}"><font size="+2">{{athlete['Fname']}} {{athlete['Lname']}}</font></a></span>&nbsp;&nbsp;&nbsp;
+<button class="btn btn-link" name="person-ID" type="submit" value="{{athlete['ath_ID']}}"><font size="+2">{{athlete['Fname']}} {{athlete['Lname']}}   </font></button>
 {% endif %}
 {% endfor %}
 {% endfor %}
 </form>
+</div>
+</div>
 </div>
 </body>
 {% endblock %}
