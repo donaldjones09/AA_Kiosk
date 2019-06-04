@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Pictures
+{% endblock %}
+
+{% block main %}
+<head>
+  <style>body{margin: 0; padding: 0;color:red;background:#696969 url('/static/images/bg.jpg') fixed right no-repeat;}a{color:#212121;}font{color:#212121;}</style>
+</head>
+<div style="margin-top:170px">
+<body>
+<div style="position:fixed;width100%;top:0;bottom:auto;">
+  <table style="position:fixed;" width=100% border=0 cellpadding=10 cellspacing=0>
+    <tr style="vertical-align:middle" bgcolor="#757575" height=100><td  style="vertical-align:middle"><a href="{{url_for('index')}}"><img src="/static/images/home.png" width=150 height=150 ></a></td><td   style="vertical-align:middle" style="vertical-align:middle"><font size="+20" style="font-family:verdana;color:#eeeeee"><b>Add Pictures</b></font></td></tr>
+  </table>
+</div>
+  <div class="container-fluid">
+  <div class="col-12 col-md-6 offset-md-3">
+      <div class="frosted-bg">
+        <form action="{{ url_for('addpicture') }}" enctype="multipart/form-data" method="post">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <label for="file"><font size="+5" style="font-family:verdana;color:#000000">Choose Photo</font></label>
+                <input type="file" id="file">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <label for="row_desc1">Year</label>
+                <input type="number" id="year">
+              </div>
+              <div class="col-6 offset-1">
+                <label for="sportselect">Sport</label>
+                <select class="form-control" id="sportselect">
+                  <option>Select Sport</option>
+                  {% for sport in sports %}
+                  <option>{{sport['sport_name']}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-12">
+                  <label for="row_desc1">1st Row Description</label>
+                  <input type="text" class="form-control" id="row_desc1">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <label for="row-1-people">Enter names (firstname, lastname, gradyear(0 if coach), c for coach, a for athlete)</label>
+                  <textarea class="form-control" name="row-1-people" rows="3"></textarea>
+                </div>
+            </div>
+                <div class="row">
+                <div class="col-12">
+                  <label for="row_desc2">2nd Row Description</label>
+                  <input type="text" class="form-control" id="row_desc2">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <label for="row-2-people">Enter names (firstname, lastname, gradyear(0 if coach), c for coach, a for athlete)</label>
+                  <textarea class="form-control" name="row-2-people" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <label for="row_desc3">3rd Row Description</label>
+                <input type="text" class="form-control" id="row_desc3">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <label for="row-3-people">Enter names (firstname, lastname, gradyear(0 if coach), c for coach, a for athlete)</label>
+                <textarea class="form-control" name="row-3-people" rows="3"></textarea>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label for="row_desc4">4th Row Description</label>
+              <input type="text" class="form-control" id="row_desc4">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label for="row-4-people">Enter names (firstname, lastname, gradyear(0 if coach), c for coach, a for athlete)</label>
+              <textarea class="form-control" name="row-4-people" rows="3"></textarea>
+            </div>
+        </div>
+            <div class="row">
+              <div class="col-12">
+                <label for="row_desc5">5th Row Description</label>
+                <input type="text" class="form-control" id="row_desc5">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <label for="row-5-people">Enter names (firstname, lastname, gradyear(0 if coach), c for coach, a for athlete)</label>
+                <textarea class="form-control" name="row-5-people" rows="3"></textarea>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-4 offset-4">
+              <button class="btn btn-primary" type="submit">Submit All</button>
+            </div>
+          </div>
+        </form>
+      </div>
+  </div>
+{% endblock %}

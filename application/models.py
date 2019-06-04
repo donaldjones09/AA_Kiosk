@@ -2,15 +2,18 @@ from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
+import os
 
 #Flask app configurations
 app = Flask(__name__)
+UPLOAD_FOLDER = "/static/images"
 app.config['DEBUG'] = False
 app.secret_key = b'\xeev\xc5\xe0\x0c9\x94\x1f\xad\xff\x02\xc2\xaa_bx\x0e\xf3*\x05\x01"\x02:'
 # Flask-SQLAlchemy
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///aagsport.db"
 app.config["SQLALCHEMY_ECHO"] = False
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
 
 #object for each athlete

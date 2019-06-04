@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import and_
 from models import *
 import string
+import os
 
 #DONE
 @app.route('/')
@@ -46,6 +47,8 @@ def athletebio():
             sportName = sport.sport_name
             newPicture = {"year": photo.year, "filename": filename, "sport_name": sportName, "pic_ID": pic_ID}
             pictures.append(newPicture)
+        #sort the pictures by year in descending order
+        pictures = sorted(pictures, key = lambda i: i['year'], reverse=True)
         return render_template('athletebio.html', athlete = athlete, pictures = pictures)
     else:
         pic_ID = int(request.form.get("pic-id"))
@@ -95,6 +98,8 @@ def coachbio():
             sportName = sport.sport_name
             newPicture = {"year": photo.year, "filename": filename, "sport_name": sportName, "pic_ID": pic_ID}
             pictures.append(newPicture)
+        #sort the pictures by year in descending order
+        pictures = sorted(pictures, key = lambda i: i['year'], reverse=True)
         return render_template('coachbio.html', coach = coach, pictures = pictures)
     else:
         pic_ID = int(request.form.get("pic-id"))
@@ -211,5 +216,22 @@ def yearhome():
 def filename_construct(filename):
     filename = filename.replace('\\', '/')
     filename = filename.replace('E:', '/static/images')
-    filename = filename + ".jpg"
+    if filename.find(".jpg") == -1:
+        filename = filename + ".jpg"
     return filename
+
+@app.route('/addpicture', methods=["GET", "POST"])
+def addpicture():
+    if request.method == "GET":
+        sports = Sport.query.order_by(Sport.sport_name).all()
+        return render_template('addpicture.html', sports=sports)
+    else:
+        file = request.files['file']
+        if file:
+            filename = file.filename
+            filename = str(request.form.get('year'))+"_"+str(request.form.get('sport_name'))+".jpg"
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #rows = []
+        #pic_ID =
+        #for x in range(1,6):
+        return redirect(url_for('addpicture'))
