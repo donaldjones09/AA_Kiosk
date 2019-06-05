@@ -10,6 +10,7 @@ import os
 def index():
     return render_template('index.html')
 
+#DONE
 @app.route('/athleteletters', methods = ["GET", "POST"])
 def athleteletters():
     if request.method == "GET":
@@ -19,6 +20,7 @@ def athleteletters():
         session['firstLetter'] = firstLetter
         return redirect(url_for('athletenames'))
 
+#DONE
 @app.route('/athletenames', methods = ["GET", "POST"])
 def athletenames():
     if request.method == "GET":
@@ -30,6 +32,7 @@ def athletenames():
         session['ath_ID'] = int(request.form.get("ath-ID"))
         return redirect(url_for('athletebio'))
 
+#DONE
 @app.route('/athletebio', methods = ["GET", "POST"])
 def athletebio():
     if request.method == "GET":
@@ -40,11 +43,14 @@ def athletebio():
         for picture in photoSeats:
             row_ID = picture.row_ID
             pic = Row.query.filter_by(row_ID = row_ID).distinct(Row.pic_ID).first()
-            pic_ID = pic.pic_ID
+            if pic != None:
+                pic_ID = pic.pic_ID
             photo = Photo.query.filter_by(pic_ID = pic_ID).first()
-            filename = filename_construct(photo.filename)
+            if photo != None:
+                filename = filename_construct(photo.filename)
             sport = Sport.query.filter_by(sport_ID = photo.sport_ID).first()
-            sportName = sport.sport_name
+            if sport != None:
+                sportName = sport.sport_name
             newPicture = {"year": photo.year, "filename": filename, "sport_name": sportName, "pic_ID": pic_ID}
             pictures.append(newPicture)
         #sort the pictures by year in descending order
@@ -219,6 +225,8 @@ def yearhome():
 def filename_construct(filename):
     filename = filename.replace('\\', '/')
     filename = filename.replace('E:', '/static/images')
+    if filename.find('/static/images') == -1:
+        filename = "/static/images/" + filename
     if filename.find(".jpg") == -1:
         filename = filename + ".jpg"
     return filename
