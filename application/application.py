@@ -4,6 +4,12 @@ from sqlalchemy import and_
 from models import *
 import string
 import os
+from flask_uploads import UploadSet, configure_uploads, IMAGES
+
+photos = UploadSet('photos', IMAGES)
+
+app.config["UPLOADED_PHOTOS_DEST"] = "/static/images"
+configure_uploads(app, photos)
 
 #DONE
 @app.route('/')
@@ -231,17 +237,15 @@ def filename_construct(filename):
         filename = filename + ".jpg"
     return filename
 
-@app.route('/addpicture', methods=["GET", "POST"])
-def addpicture():
+@app.route('/upload', methods=["GET", "POST"])
+def upload():
     if request.method == "GET":
         sports = Sport.query.order_by(Sport.sport_name).all()
-        return render_template('addpicture.html', sports=sports)
+        return render_template('upload.html', sports=sports)
     else:
-        file = request.files['file']
-        if file:
-            filename = file.filename
-            filename = str(request.form.get('year'))+"_"+str(request.form.get('sport_name'))+".jpg"
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        filename = photos.save(request.files['photo'])
+        #filename = str(request.form.get('year'))+"_"+str(request.form.get('sport_name'))+".jpg"
+        #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #rows = []
         #pic_ID =
         #for x in range(1,6):
