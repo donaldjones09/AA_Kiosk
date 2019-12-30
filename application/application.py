@@ -11,12 +11,16 @@ photos = UploadSet('photos', IMAGES)
 app.config["UPLOADED_PHOTOS_DEST"] = "/static/images"
 configure_uploads(app, photos)
 
-#DONE
+# Created by Donald Jones
+# Interactive database for Albany Academy Athletics
+
+
+#Homepage
 @app.route('/')
 def index():
     return render_template('index.html')
 
-#DONE
+#Lists an index of letters for athletes names
 @app.route('/athleteletters', methods = ["GET", "POST"])
 def athleteletters():
     if request.method == "GET":
@@ -26,7 +30,7 @@ def athleteletters():
         session['firstLetter'] = firstLetter
         return redirect(url_for('athletenames'))
 
-#DONE
+#Lists the names of all the athletes with last names starting with a given letter
 @app.route('/athletenames', methods = ["GET", "POST"])
 def athletenames():
     if request.method == "GET":
@@ -38,7 +42,7 @@ def athletenames():
         session['ath_ID'] = int(request.form.get("ath-ID"))
         return redirect(url_for('athletebio'))
 
-#DONE
+#shows all photos that include a given athlete
 @app.route('/athletebio', methods = ["GET", "POST"])
 def athletebio():
     if request.method == "GET":
@@ -67,7 +71,6 @@ def athletebio():
         session['pic_ID'] = pic_ID
         return redirect(url_for('sportyear'))
 
-#DONE
 #Index of letters for coaches
 @app.route('/coachindex', methods = ["GET", "POST"])
 def coachletters():
@@ -78,8 +81,7 @@ def coachletters():
         session['firstLetter'] = firstLetter
         return redirect(url_for('coachnames'))
 
-#DONE
-#lists all peoples names with a certain letter
+#lists all coaches names with a certain letter
 @app.route('/coachnames', methods = ["GET", "POST"])
 def coachnames():
     if request.method == "GET":
@@ -91,8 +93,7 @@ def coachnames():
         session['coach_ID'] = int(request.form.get("coach-ID"))
         return redirect(url_for('coachbio'))
 
-#DONE
-#lists every picture the coach is in
+#lists every picture the given coach is in
 @app.route('/coachbio', methods = ["GET", "POST"])
 def coachbio():
     if request.method == "GET":
@@ -121,7 +122,6 @@ def coachbio():
         session['pic_ID'] = pic_ID
         return redirect(url_for('sportyear'))
 
-#DONE
 #Lists all sports by name
 @app.route('/sportindex', methods = ["GET", "POST"])
 def sportindex():
@@ -133,7 +133,7 @@ def sportindex():
         session['sport_ID'] = sport_ID
         return redirect(url_for('sporthome'))
 
-#DONE
+#Displays all photos from a certain sport
 @app.route('/sporthome', methods = ["GET", "POST"])
 def sporthome():
     #list of all years of a specific sport
@@ -148,7 +148,7 @@ def sporthome():
         session['pic_ID'] = pic_ID
         return redirect(url_for('sportyear'))
 
-#DONE
+#Displays a photo from a certain sport from a certain year
 @app.route('/sportyear', methods = ["GET", "POST"])
 def sportyear():
     if request.method == "GET":
@@ -197,7 +197,7 @@ def sportyear():
             session['ath_ID'] = ID
             return redirect(url_for('athletebio'))
 
-#DONE
+#List of years to select photos from
 @app.route('/yearindex', methods = ["GET", "POST"])
 def yearindex():
     if request.method == "GET":
@@ -208,7 +208,7 @@ def yearindex():
         session['year'] = year
         return redirect(url_for('yearhome'))
 
-#DONE
+#Displays all photos from a given year
 @app.route('/yearhome', methods = ["GET", "POST"])
 def yearhome():
     if request.method == "GET":
